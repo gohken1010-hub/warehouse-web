@@ -1,25 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Warehouse Cloud Test</title>
+  <meta charset="UTF-8" />
+  <title>Warehouse Cloud</title>
 </head>
 <body>
 
-<h1>Warehouse Cloud Test</h1>
+<h1>Warehouse Cloud</h1>
 
-<button id="addBtn">Add Test Item</button>
+<div>
+  <label>User:</label>
+  <input id="user" value="Admin" />
+</div>
+
+<div>
+  <label>Action:</label>
+  <select id="action">
+    <option value="ADD">ADD</option>
+    <option value="REMOVE">REMOVE</option>
+  </select>
+</div>
+
+<div>
+  <label>Item:</label>
+  <input id="item" placeholder="e.g. Diamond" />
+</div>
+
+<div>
+  <label>Quantity:</label>
+  <input id="qty" type="number" value="1" />
+</div>
+
+<br />
+
+<button id="submitBtn">Submit</button>
 
 <script>
-/* ===== Google Apps Script Web App URL ===== */
 const API_URL = "https://script.google.com/macros/s/AKfycbwXFFWuYZ0aOqc43Hz4hBuhKEy9ojx8314akyBxWTzat6mO35b2eK-G9VXyWLkcIBaM/exec";
 
-document.getElementById("addBtn").addEventListener("click", () => {
+document.getElementById("submitBtn").onclick = () => {
+  const user = document.getElementById("user").value;
+  const action = document.getElementById("action").value;
+  const item = document.getElementById("item").value;
+  const qty = document.getElementById("qty").value;
+
   const params = new URLSearchParams();
-  params.append("user", "Admin");
-  params.append("action", "ADD");
-  params.append("item", "Jade");
-  params.append("qty", "1");
+  params.append("user", user);
+  params.append("action", action);
+  params.append("item", item);
+  params.append("qty", qty);
 
   fetch(API_URL, {
     method: "POST",
@@ -29,13 +58,9 @@ document.getElementById("addBtn").addEventListener("click", () => {
     body: params.toString()
   })
   .then(res => res.json())
-  .then(data => {
-    alert(JSON.stringify(data));
-  })
-  .catch(err => {
-    alert("Fetch error: " + err);
-  });
-});
+  .then(data => alert(JSON.stringify(data)))
+  .catch(err => alert("Error: " + err));
+};
 </script>
 
 </body>
