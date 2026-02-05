@@ -10,21 +10,21 @@
   <button id="add">Add Test Item</button>
 
   <script>
-    // ⬇️ 换成你自己的 Google Apps Script Web App URL
+    // ⚠️ 换成你自己的 Google Apps Script Web App URL
     const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbwXFFWuYZ0aOqc43Hz4hBuhKEy9ojx8314akyBxWTzat6mO35b2eK-G9VXyWLkcIBaM/exec";
 
     document.getElementById("add").onclick = async () => {
       try {
-        const payload = {
-          user: "Admin",
-          action: "ADD_ITEM",
-          item: "Jade",
-          qty: 1
-        };
+        // 用最传统、不会触发 CORS preflight 的方式
+        const formData = new URLSearchParams();
+        formData.append("user", "Admin");
+        formData.append("action", "ADD_ITEM");
+        formData.append("item", "Jade");
+        formData.append("qty", "1");
 
         const res = await fetch(CLOUD_API_URL, {
           method: "POST",
-          body: JSON.stringify(payload)
+          body: formData
         });
 
         const text = await res.text();
