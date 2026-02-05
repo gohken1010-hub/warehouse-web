@@ -13,7 +13,7 @@
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbwXFFWuYZ0aOqc43Hz4hBuhKEy9ojx8314akyBxWTzat6mO35b2eK-G9VXyWLkcIBaM/exec";
 
-document.getElementById("addBtn").onclick = () => {
+document.getElementById("addBtn").addEventListener("click", () => {
   const params = new URLSearchParams();
   params.append("user", "Admin");
   params.append("action", "ADD");
@@ -30,7 +30,7 @@ document.getElementById("addBtn").onclick = () => {
   .then(res => res.json())
   .then(data => alert(JSON.stringify(data)))
   .catch(err => alert("Fetch error: " + err));
-};
+});
 </script>
 
 </body>
