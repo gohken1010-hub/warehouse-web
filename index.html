@@ -11,6 +11,7 @@
 <button id="addBtn">Add Test Item</button>
 
 <script>
+/* ===== Google Apps Script Web App URL ===== */
 const API_URL = "https://script.google.com/macros/s/AKfycbwXFFWuYZ0aOqc43Hz4hBuhKEy9ojx8314akyBxWTzat6mO35b2eK-G9VXyWLkcIBaM/exec";
 
 document.getElementById("addBtn").addEventListener("click", () => {
@@ -28,8 +29,12 @@ document.getElementById("addBtn").addEventListener("click", () => {
     body: params.toString()
   })
   .then(res => res.json())
-  .then(data => alert(JSON.stringify(data)))
-  .catch(err => alert("Fetch error: " + err));
+  .then(data => {
+    alert(JSON.stringify(data));
+  })
+  .catch(err => {
+    alert("Fetch error: " + err);
+  });
 });
 </script>
 
