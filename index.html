@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Warehouse System</title>
+  <title>Warehouse Cloud Test</title>
 </head>
 <body>
   <h1>Warehouse Cloud Test</h1>
@@ -10,26 +10,29 @@
   <button id="add">Add Test Item</button>
 
   <script>
+    // ⬇️ 换成你自己的 Google Apps Script Web App URL
     const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbwXFFWuYZ0aOqc43Hz4hBuhKEy9ojx8314akyBxWTzat6mO35b2eK-G9VXyWLkcIBaM/exec";
 
     document.getElementById("add").onclick = async () => {
-      const payload = {
-        user: "Admin",
-        action: "ADD_ITEM",
-        item: "Jade",
-        qty: 1
-      };
+      try {
+        const payload = {
+          user: "Admin",
+          action: "ADD_ITEM",
+          item: "Jade",
+          qty: 1
+        };
 
-      const res = await fetch(CLOUD_API_URL, {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
+        const res = await fetch(CLOUD_API_URL, {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
 
-      const data = await res.json();
-      alert(JSON.stringify(data));
+        const text = await res.text();
+        alert(text);
+
+      } catch (err) {
+        alert("ERROR: " + err);
+      }
     };
   </script>
 </body>
