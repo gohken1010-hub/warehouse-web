@@ -1,39 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <title>Warehouse Cloud Test</title>
 </head>
 <body>
-  <h1>Warehouse Cloud Test</h1>
 
-  <button id="add">Add Test Item</button>
+<h1>Warehouse Cloud Test</h1>
 
-  <script>
-    // ⚠️ 换成你自己的 Google Apps Script Web App URL
-    const CLOUD_API_URL = "https://script.google.com/macros/s/AKfycbwXFFWuYZ0aOqc43Hz4hBuhKEy9ojx8314akyBxWTzat6mO35b2eK-G9VXyWLkcIBaM/exec";
+<button id="addBtn">Add Test Item</button>
 
-    document.getElementById("add").onclick = async () => {
-      try {
-        // 用最传统、不会触发 CORS preflight 的方式
-        const formData = new URLSearchParams();
-        formData.append("user", "Admin");
-        formData.append("action", "ADD_ITEM");
-        formData.append("item", "Jade");
-        formData.append("qty", "1");
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbwXFFWuYZ0aOqc43Hz4hBuhKEy9ojx8314akyBxWTzat6mO35b2eK-G9VXyWLkcIBaM/exec';
 
-        const res = await fetch(CLOUD_API_URL, {
-          method: "POST",
-          body: formData
-        });
+document.getElementById('addBtn').onclick = async () => {
+  const params = new URLSearchParams({
+    user: 'Admin',
+    action: 'ADD',
+    item: 'Jade',
+    qty: 1
+  });
 
-        const text = await res.text();
-        alert(text);
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: params
+  });
 
-      } catch (err) {
-        alert("ERROR: " + err);
-      }
-    };
-  </script>
+  const text = await res.text();
+  alert(text);
+};
+</script>
+
 </body>
 </html>
