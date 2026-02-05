@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8">
   <title>Warehouse Cloud Test</title>
 </head>
 <body>
@@ -11,27 +11,30 @@
 <button id="addBtn">Add Test Item</button>
 
 <script>
-const API_URL = 'https://script.google.com/macros/s/AKfycbwXFFWuYZ0aOqc43Hz4hBuhKEy9ojx8314akyBxWTzat6mO35b2eK-G9VXyWLkcIBaM/exec';
+const API_URL = "https://script.google.com/macros/s/AKfycbwXFFWuYZ0aOqc43Hz4hBuhKEy9ojx8314akyBxWTzat6mO35b2eK-G9VXyWLkcIBaM/exec";
 
-document.getElementById('addBtn').onclick = async () => {
-  const params = new URLSearchParams({
-    user: 'Admin',
-    action: 'ADD',
-    item: 'Jade',
-    qty: 1
-  });
+document.getElementById("addBtn").addEventListener("click", () => {
+  const params = new URLSearchParams();
+  params.append("user", "Admin");
+  params.append("action", "ADD");
+  params.append("item", "Jade");
+  params.append("qty", "1");
 
-  const res = await fetch(API_URL, {
-    method: 'POST',
+  fetch(API_URL, {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      "Content-Type": "application/x-www-form-urlencoded"
     },
-    body: params
+    body: params.toString()
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(JSON.stringify(data));
+  })
+  .catch(err => {
+    alert("Fetch error: " + err);
   });
-
-  const text = await res.text();
-  alert(text);
-};
+});
 </script>
 
 </body>
