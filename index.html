@@ -1,35 +1,37 @@
-const SPREADSHEET_ID = '1K7FELKMwP4JQdpg62oNKDIpnd3iFP5ZY292Sn3AKDIM';
-const SHEET_NAME = 'WarehouseLogs';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Warehouse Cloud Test</title>
+</head>
+<body>
 
-function doPost(e) {
-  try {
-    const data = e.parameter; // 只能是这个
+<h1>Warehouse Cloud Test</h1>
 
-    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-    let sheet = ss.getSheetByName(SHEET_NAME);
+<button id="addBtn">Add Test Item</button>
 
-    if (!sheet) {
-      sheet = ss.insertSheet(SHEET_NAME);
-      sheet.appendRow(['Time', 'User', 'Action', 'Item', 'Quantity']);
-    }
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbwXFFWuYZ0aOqc43Hz4hBuhKEy9ojx8314akyBxWTzat6mO35b2eK-G9VXyWLkcIBaM/exec";
 
-    sheet.appendRow([
-      new Date(),
-      data.user || 'Unknown',
-      data.action || 'UNKNOWN',
-      data.item || '',
-      Number(data.qty || 0)
-    ]);
+document.getElementById("addBtn").onclick = () => {
+  const params = new URLSearchParams();
+  params.append("user", "Admin");
+  params.append("action", "ADD");
+  params.append("item", "Jade");
+  params.append("qty", "1");
 
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'ok' }))
-      .setMimeType(ContentService.MimeType.JSON);
+  fetch(API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: params.toString()
+  })
+  .then(res => res.json())
+  .then(data => alert(JSON.stringify(data)))
+  .catch(err => alert("Fetch error: " + err));
+};
+</script>
 
-  } catch (err) {
-    return ContentService
-      .createTextOutput(
-        JSON.stringify({ status: 'error', message: err.toString() })
-      )
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
+</body>
+</html>
